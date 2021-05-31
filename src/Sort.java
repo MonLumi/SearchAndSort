@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Sort {
 
     public static void bubbleSort(double[] array) {
@@ -10,7 +12,7 @@ public class Sort {
                     array[j+1] = tmp;
                 }
             }
-            display(array);
+            display(array,i);
         }
     }
 
@@ -28,7 +30,7 @@ public class Sort {
                 array[i] = array[minIndex];
                 array[minIndex] = tmp;
             }
-            display(array);
+            display(array,i);
         }
     }
 
@@ -42,24 +44,15 @@ public class Sort {
                 j--;
             }
             array[j+1] = key;
-            display(array);
+            display(array,i);
         }
     }
 
-    public static void display(double[] array) {
+    public static void display(double[] array, int step) {
+        System.out.print ("Step " + (step+1) + ": ");
         for (double value: array) {
             System.out.print(value + " ");
         }
         System.out.println();
     }
-
-    public static double[] clone(double[] array) {
-        double [] cloneArray = new double[array.length];
-        for (int i = 0; i < array.length; i++) {
-            cloneArray[i] = array[i];
-        }
-
-        return cloneArray;
-    }
-
 }

@@ -1,12 +1,15 @@
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
     static Scanner keyboard = new Scanner(System.in);
-    static File file = new File("INPUT.TXT");
+    static File file;
 
     public static double[] importArray() throws IOException {
+        file = new File("INPUT.TXT");
+
         FileInputStream fileInputStream = new FileInputStream(file);
         InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
         BufferedReader input = new BufferedReader(inputStreamReader);
@@ -20,20 +23,22 @@ public class Main {
         return array;
     }
 
-    public static void exportArray(double[] array) throws IOException {
+    public static void exportArray(double[] array, String fileName) throws IOException {
+        file = new File(fileName + ".TXT");
+        if (!file.exists()) file.createNewFile();
+
+
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
         BufferedWriter out = new BufferedWriter(outputStreamWriter);
 
         for (double value : array) {
-            out.append(value + " ");
+            out.append(String.valueOf(value)).append(" ");
         }
         out.close();
     }
 
     public static void main(String[] args) throws IOException {
-        if (!file.exists()) file.createNewFile();
-
         int choice;
         do {
             menu();
@@ -41,32 +46,86 @@ public class Main {
             switch (choice) {
                 //Input double number to database
                 case 1 -> {
-                    write();
+                    System.out.print("How many elements do you want to add?: ");
+                    int length = Integer.parseInt(keyboard.nextLine());
+                    double[] array = new double[length];
+
+                    // add number to array
+                    for (int i = 0; i < length; i++) {
+                        switch (i) {
+                            case 0 -> System.out.print("1st number: ");
+                            case 1 -> System.out.print("2nd number: ");
+                            case 2 -> System.out.print("3rd number: ");
+                            default -> System.out.print(i+1 + "th number: ");
+                        }
+                        array[i] = Double.parseDouble(keyboard.nextLine());
+                    }
+                        exportArray(array, "INPUT");
+
+                    System.out.println("You've successfully added " + length + " numbers");
                 }
 
                 //Display all number from database
                 case 2 -> {
                     double[] array = importArray();
-                    for (double value : array) {
-                        System.out.print(value + " ");
-                    }
-                    System.out.println();
+                    System.out.println(Arrays.toString(array));
                 }
 
                 //Bubble Sort
-                case 3 -> {}
+                case 3 -> {
+                    double[] array = importArray();
+                    Sort.bubbleSort(array);
+                    exportArray(array, "OUTPUT1");
+                }
 
                 //Selection Sort
-                case 4 -> {}
+                case 4 -> {
+                    double[] array = importArray();
+                    Sort.selectionSort(array);
+                    exportArray(array, "OUTPUT2");
+                }
 
                 //Insertion Sort
-                case 5 -> {}
+                case 5 -> {
+                    double[] array = importArray();
+                    Sort.insertionSort(array);
+                    exportArray(array, "OUTPUT3");
+                }
 
                 //Liner Search
-                case 6 -> {}
+                case 6 -> {
+                    System.out.print("Type number: ");
+                    double value = Double.parseDouble(keyboard.nextLine());
+                    double[] array = importArray();
+
+                    array = Search.linerSearch(array, value);
+                    exportArray(array, "OUTPUT4");
+                }
 
                 //Binary Search
-                case 7 -> {}
+                case 7 -> {
+                    System.out.print("Type number: ");
+                    double value = Double.parseDouble(keyboard.nextLine());
+                    double[] array = importArray();
+
+                    int index = Search.binarySearch(array, value);
+
+                    //It's only for one String output
+                    if(index >= 0) {
+                        String result = "Index " + index + " has value: " + array[index];
+                        System.out.println(result);
+                        file = new File("OUTPUT5.TXT");
+                        if (!file.exists()) file.createNewFile();
+
+                        FileOutputStream fileOutputStream = new FileOutputStream(file);
+                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
+                        BufferedWriter out = new BufferedWriter(outputStreamWriter);
+                        out.write(result);
+                        out.close();
+                    } else {
+                        System.out.println("There are no value in the array!");
+                    }
+                }
             }
 
             if (choice < 8) {
@@ -93,30 +152,6 @@ public class Main {
 
     public static void lineBreak() {
         System.out.println("--------------------");
-    }
-
-    public static void write() {
-        System.out.print("How many elements do you want to add?: ");
-        int length = Integer.parseInt(keyboard.nextLine());
-        double[] array = new double[length];
-
-        // add number to array
-        for (int i = 0; i < length; i++) {
-            switch (i) {
-                case 0 -> System.out.print("1st number: ");
-                case 1 -> System.out.print("2nd number: ");
-                case 2 -> System.out.print("3rd number: ");
-                default -> System.out.print(i+1 + "th number: ");
-            }
-            array[i] = Double.parseDouble(keyboard.nextLine());
-        }
-        try {
-            exportArray(array);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("You've successfully added " + length + " numbers");
     }
 
 }
