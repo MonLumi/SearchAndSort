@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Sort {
 
     public static void bubbleSort(double[] array, boolean isDisplay) {
@@ -48,10 +50,7 @@ public class Sort {
 
     public static void display(double[] array, int step) {
         System.out.print ("Step " + (step+1) + ": ");
-        for (double value: array) {
-            System.out.print(value + " ");
-        }
-        System.out.println();
+        System.out.println(Arrays.toString(array));
     }
 
     public static void timeCompare(double[] array, int loop) {

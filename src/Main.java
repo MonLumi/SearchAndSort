@@ -77,6 +77,9 @@ public class Main {
                 //Bubble Sort
                 case 3 -> {
                     double[] array = importArray("INPUT.TXT");
+                    System.out.println("Unsorted array:");
+                    System.out.println(Arrays.toString(array));
+                    lineBreak();
                     Sort.bubbleSort(array, true);
                     exportArray(array, "OUTPUT1");
                 }
@@ -84,6 +87,9 @@ public class Main {
                 //Selection Sort
                 case 4 -> {
                     double[] array = importArray("INPUT.TXT");
+                    System.out.println("Unsorted array:");
+                    System.out.println(Arrays.toString(array));
+                    lineBreak();
                     Sort.selectionSort(array, true);
                     exportArray(array, "OUTPUT2");
                 }
@@ -91,15 +97,21 @@ public class Main {
                 //Insertion Sort
                 case 5 -> {
                     double[] array = importArray("INPUT.TXT");
+                    System.out.println("Unsorted array:");
+                    System.out.println(Arrays.toString(array));
+                    lineBreak();
                     Sort.insertionSort(array, true);
                     exportArray(array, "OUTPUT3");
                 }
 
                 //Liner Search
                 case 6 -> {
+                    System.out.println("This function will search which index " +
+                            "have value's greater than your number");
                     System.out.print("Type number: ");
                     double value = Double.parseDouble(keyboard.nextLine());
                     double[] array = importArray("INPUT.TXT");
+                    System.out.println("Array: " + Arrays.toString(array));
 
                     array = Search.linerSearch(array, value);
                     exportArray(array, "OUTPUT4");
@@ -132,8 +144,8 @@ public class Main {
                 //sort compare
                 case 8 -> {
                     int isRepeat;
+                    double[] checkArray = null;
                     do {
-                        double[] checkArray = null;
                         //import data case
                         System.out.println("Which case do you want to compare?");
                         lineBreak();
@@ -162,6 +174,7 @@ public class Main {
                             }
                         } while (dataChoice > 3 || dataChoice < 1);
 
+                        System.out.println(Arrays.toString(checkArray));
                         System.out.println("The compare function will run 10 times");
                         lineBreak();
                         Sort.timeCompare(checkArray, 10);
@@ -175,10 +188,10 @@ public class Main {
 
             if (choice < 9) {
                 lineBreak();
-                System.out.print("Exit program? (\"1\" for yes): ");
+                System.out.print("Back to Main menu? (\"1\" for yes): ");
                 choice = Integer.parseInt(keyboard.nextLine());
             }
-        } while (choice != 1 && choice < 9);
+        } while (choice == 1);
         lineBreak();
         System.out.println("Good bye!");
     }
